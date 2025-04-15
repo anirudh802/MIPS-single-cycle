@@ -58,8 +58,6 @@ assign temp_addr=PC_out+1;
 PC program_counter(clk,rst,done,PC_in,PC_out);
 
 
-
-
 memory ins_mem (
   .a(instr_addr),        // input wire [9 : 0] a
   .d(instr),        // input wire [31 : 0] d
@@ -97,7 +95,7 @@ always@(*)
 begin
 if(ALUSrc==2'h2)
 inp2<=shamt;
-else if (ALUSrc==2'h1)
+else if (ALUSrc==2'h0)
 inp2<=Data2;
 else
 inp2<=immidiate;
