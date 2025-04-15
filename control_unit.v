@@ -155,6 +155,49 @@ module control_unit (
                 done        = 1;
 
             end
+            6'd50: begin // Floating Point Operations
+                case (func)
+                    6'd0: begin // mfcl r0, f0
+                        reg_write   = 1;
+                        alu_control = 6'd32;
+                    end
+                    6'd1: begin // mtc1 f0, r0
+                        reg_write   = 1;
+                        alu_control = 6'd33;
+                    end
+                    6'd2: begin // add.s f0, f1, f2
+                        reg_write   = 1;
+                        alu_control = 6'd34;
+                    end
+                    6'd3: begin // sub.s f0, f1, f2
+                        reg_write   = 1;
+                        alu_control = 6'd25;
+                    end
+                    6'd4: begin // c.eq.s
+                        alu_control = 6'd26;
+                    end
+                    6'd5: begin // c.le.s
+                        alu_control = 6'd27;
+                    end
+                    6'd6: begin // c.lt.s
+                        alu_control = 6'd28;
+                    end
+                    6'd7: begin // c.ge.s
+                        alu_control = 6'd29;
+                    end
+                    6'd8: begin // c.gt.s
+                        alu_control = 6'd30;
+                    end
+                    6'd9: begin // mov.s cc f0, f1
+                        reg_write   = 1;
+                        alu_control = 6'd31;
+                    end
+                    default: begin
+                        alu_control = 6'd24;
+                    end
+                endcase
+            end
+
             default: begin
                 // NOP or undefined
             end

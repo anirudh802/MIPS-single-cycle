@@ -38,6 +38,27 @@ module ALU (
             6'd22: result = (A > B) ? 1 : 0;              // BGTU
             6'd23: result = {B[15:0], 16'b0};             // LUI
             6'd24: result = A;                       // JR
+
+            6'd34: begin // add.s
+                real_A = $bitstoreal(A);
+                real_B = $bitstoreal(B);
+                real_result = real_A + real_B;
+                result = $realtobits(real_result);
+            end
+            6'd25: begin // sub.s
+                real_A = $bitstoreal(A);
+                real_B = $bitstoreal(B);
+                real_result = real_A - real_B;
+                result = $realtobits(real_result);
+            end
+            6'd26: begin cc_flag = ($bitstoreal(A) == $bitstoreal(B)); end //c.eq.s
+            6'd27: begin cc_flag = ($bitstoreal(A) <= $bitstoreal(B)); end //c.le.s
+            6'd28: begin cc_flag = ($bitstoreal(A) < $bitstoreal(B)); end //c.lt.s
+            6'd29: begin cc_flag = ($bitstoreal(A) >= $bitstoreal(B)); end //c.ge.s
+            6'd30: begin cc_flag = ($bitstoreal(A) > $bitstoreal(B)); end //c.gt.s
+            6'd31: begin result = (cc_flag) ? B : A; end //mov.s cc
+            6'd32: result = B; // mfcl
+            6'd33: result = B; // mtc1
             default: result = 32'b0;
         endcase
 
